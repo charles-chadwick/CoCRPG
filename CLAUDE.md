@@ -148,6 +148,17 @@ protected function isAccessible(User $user, ?string $path = null): bool
 - New features: deferred props, infinite scrolling (merging props + `WhenVisible`), lazy loading on scroll, polling, prefetching.
 - When using deferred props, add an empty state with a pulsing or animated skeleton.
 
+# VueJS
+- Use VueJS 3.
+- Always use --color-primary- and --color-secondary- variables in VueJS.
+- Use --color-darker for all gray colors in VueJS
+- `snake_case` for variables, `PascalCase` for components and methods. 
+
+# TailwindCSS
+- Use TailwindCSS v4.
+- Always use --color-primary- and --color-secondary- variables in VueJS.
+- Use --color-darker for all gray colors in VueJS
+
 === laravel/core rules ===
 
 # Do Things the Laravel Way
