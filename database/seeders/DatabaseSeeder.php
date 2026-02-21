@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Database\Seeders\CharacterSeeder;
 use Database\Seeders\PossessionSeeder;
+use Database\Seeders\SkillSeeder;
 use Database\Seeders\StatSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CharacterSeeder::class,
             StatSeeder::class,
+            SkillSeeder::class,
             PossessionSeeder::class,
         ]);
     }
