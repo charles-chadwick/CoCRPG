@@ -42,4 +42,9 @@ class Player extends Base
     {
         return $this->hasMany(Stat::class);
     }
+
+    public function possessions(): HasMany
+    {
+        return $this->hasMany(Possession::class);
+    }
 }

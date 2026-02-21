@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stats', function (Blueprint $table) {
+        Schema::create('possessions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('player_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->unsignedInteger('value')->default(0);
+            $table->string('modifier_sign')->nullable();
+            $table->integer('modifier')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stats');
+        Schema::dropIfExists('possessions');
     }
 };

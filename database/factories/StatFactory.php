@@ -21,7 +21,7 @@ class StatFactory extends Factory
     {
         return [
             'player_id' => Player::factory(),
-            'key' => fake()->randomElement(StatEnum::cases()),
+            'name' => fake()->randomElement(StatEnum::cases()),
             'value' => fake()->numberBetween(1, 20),
         ];
     }

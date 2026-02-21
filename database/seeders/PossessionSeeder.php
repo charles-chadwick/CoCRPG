@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Enums\PlayerStat;
+use App\Enums\PlayerPossession;
 use App\Models\Player;
-use App\Models\Stat;
+use App\Models\Possession;
 use Illuminate\Database\Seeder;
 
-class StatSeeder extends Seeder
+class PossessionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,10 +15,10 @@ class StatSeeder extends Seeder
     public function run(): void
     {
         Player::query()->each(function (Player $player): void {
-            foreach (PlayerStat::cases() as $stat) {
-                Stat::factory()->create([
+            foreach (PlayerPossession::cases() as $possession) {
+                Possession::factory()->create([
                     'player_id' => $player->id,
-                    'name' => $stat,
+                    'name' => $possession,
                 ]);
             }
         });

@@ -140,6 +140,7 @@ protected function isAccessible(User $user, ?string $path = null): bool
 
 ## Database
 
+- When adding columns to a table that has not yet been deployed to production, always update the original `create_*` migration directly instead of creating a new migration. Only create a separate migration for changes to tables that are already in production.
 - Always use proper Eloquent relationship methods with return type hints. Prefer relationship methods over raw queries or manual joins.
 - Use Eloquent models and relationships before suggesting raw database queries.
 - Avoid `DB::`; prefer `Model::query()`. Generate code that leverages Laravel's ORM capabilities rather than bypassing them.

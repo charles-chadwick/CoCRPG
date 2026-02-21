@@ -2,27 +2,32 @@
 
 namespace App\Models;
 
-use App\Enums\PlayerStat as StatEnum;
-use Database\Factories\StatFactory;
+use App\Enums\ModifierSign;
+use App\Enums\PlayerPossession;
+use Database\Factories\PossessionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Stat extends Base
+class Possession extends Base
 {
-    /** @use HasFactory<StatFactory> */
+    /** @use HasFactory<PossessionFactory> */
     use HasFactory;
 
     protected $fillable = [
         'player_id',
         'name',
         'value',
+        'modifier_sign',
+        'modifier',
     ];
 
     protected function casts(): array
     {
         return [
-            'name' => StatEnum::class,
+            'name' => PlayerPossession::class,
             'value' => 'integer',
+            'modifier_sign' => ModifierSign::class,
+            'modifier' => 'integer',
         ];
     }
 
