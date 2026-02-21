@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('possessions', function (Blueprint $table) {
+        Schema::create('player_possession', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
-            $table->string('name');
-            $table->unsignedInteger('value')->default(0);
+            $table->foreignId('player_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('possession_id')->constrained()->cascadeOnDelete();
+            $table->string('modifier_sign')->nullable();
+            $table->integer('modifier')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('possessions');
+        Schema::dropIfExists('player_possession');
     }
 };

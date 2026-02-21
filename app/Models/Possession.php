@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use App\Enums\ModifierSign;
 use App\Enums\PlayerPossession;
 use Database\Factories\PossessionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Possession extends Base
 {
@@ -14,12 +13,9 @@ class Possession extends Base
     use HasFactory;
 
     protected $fillable = [
-        'player_id',
         'type',
         'name',
         'value',
-        'modifier_sign',
-        'modifier',
     ];
 
     protected function casts(): array
@@ -27,13 +23,14 @@ class Possession extends Base
         return [
             'type' => PlayerPossession::class,
             'value' => 'integer',
-            'modifier_sign' => ModifierSign::class,
-            'modifier' => 'integer',
         ];
     }
 
-    public function player(): BelongsTo
+    public function players(): BelongsToMany
     {
-        return $this->belongsTo(Player::class);
+        return $this->belongsToMany(Player::class)
+            ->using(PlayerPossession::class)
+            ->withPivot('modifier_sign', 'modifier')
+            ->withTimestamps();
     }
 }

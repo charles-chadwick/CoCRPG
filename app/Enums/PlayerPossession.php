@@ -4,9 +4,9 @@ namespace App\Enums;
 
 enum PlayerPossession: string
 {
-    case Weapon = 'Weapon';
-    case Armor = 'Armor';
-    case Shield = 'Shield';
-    case Potion = 'Potion';
-    case Scroll = 'Scroll';
+    case Weapon        = 'Weapon';
+    case Essential     = 'Essential';
+    case Arcane        = 'Arcane';
+    case Investigative = 'Investigative';
+    case Key           = 'Key';
 }
