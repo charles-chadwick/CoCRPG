@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedInteger('value')->default(0);
             $table->timestamps();
             $table->softDeletes();
+            $table->unique(['type', 'name']);
         });
     }
 
