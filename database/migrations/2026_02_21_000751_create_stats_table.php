@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('players', function (Blueprint $table) {
+        Schema::create('stats', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('name');
-            $table->string('race');
-            $table->string('character_class');
-            $table->unsignedSmallInteger('level')->default(1);
-            $table->unsignedInteger('experience_points')->default(0);
+            $table->foreignId('player_id')->constrained()->cascadeOnDelete();
+            $table->string('key');
+            $table->unsignedInteger('value')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('players');
+        Schema::dropIfExists('stats');
     }
 };
