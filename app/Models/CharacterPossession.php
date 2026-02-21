@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class CharacterPossession extends Pivot
 {
+    protected $table = 'character_possessions';
+
     protected function casts(): array
     {
         return [

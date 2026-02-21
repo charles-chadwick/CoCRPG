@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Enums;
+namespace App\Enums\Character;
 
-enum CharacterPossession: string
+enum Possession: string
 {
     case Weapon        = 'Weapon';
     case Essential     = 'Essential';

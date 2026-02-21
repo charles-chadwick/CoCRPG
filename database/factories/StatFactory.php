@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Enums\CharacterStat as StatEnum;
+use App\Enums\Character\Stat as StatEnum;
 use App\Models\Character;
 use App\Models\Stat;
 use Illuminate\Database\Eloquent\Factories\Factory;

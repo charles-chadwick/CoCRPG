@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\ModifierSign;
-use App\Enums\CharacterPossession;
+use App\Enums\Character\Possession as CharacterPossession;
 use App\Models\Character;
 use App\Models\Possession;
 use Illuminate\Database\Seeder;

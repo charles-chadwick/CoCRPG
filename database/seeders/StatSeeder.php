@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Enums\CharacterStat;
+use App\Enums\Character\Stat as CharacterStat;
 use App\Models\Character;
 use App\Models\Stat;
 use Illuminate\Database\Seeder;

@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Enums\CharacterPossession;
+use App\Enums\Character\Possession as CharacterPossession;
 use App\Models\Possession;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

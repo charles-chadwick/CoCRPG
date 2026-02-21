@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Enums;
+namespace App\Enums\Character;
 
-enum CharacterStat: string
+enum Stat: string
 {
     case Strength = 'Strength';
     case Constitution = 'Constitution';

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\CharacterPossession;
+use App\Enums\Character\Possession as PossessionType;
 use Database\Factories\PossessionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -21,7 +21,7 @@ class Possession extends Base
     protected function casts(): array
     {
         return [
-            'type' => CharacterPossession::class,
+            'type' => PossessionType::class,
             'value' => 'integer',
         ];
     }
