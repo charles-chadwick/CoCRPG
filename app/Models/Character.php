@@ -43,9 +43,9 @@ class Character extends Base
         return $this->hasMany(Stat::class);
     }
 
-    public function skills(): HasMany
+    public function characterSkills(): HasMany
     {
-        return $this->hasMany(Skill::class);
+        return $this->hasMany(CharacterSkill::class);
     }
 
     public function possessions(): BelongsToMany

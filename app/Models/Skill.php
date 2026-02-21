@@ -5,31 +5,24 @@ namespace App\Models;
 use App\Enums\Character\Skill as SkillEnum;
 use Database\Factories\SkillFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Skill extends Base
 {
     /** @use HasFactory<SkillFactory> */
     use HasFactory;
 
-    protected $table = 'character_skills';
-
-    protected $fillable = [
-        'character_id',
-        'name',
-        'value',
-    ];
+    protected $fillable = ['name'];
 
     protected function casts(): array
     {
         return [
-            'name'  => SkillEnum::class,
-            'value' => 'integer',
+            'name' => SkillEnum::class,
         ];
     }
 
-    public function character(): BelongsTo
+    public function characterSkills(): HasMany
     {
-        return $this->belongsTo(Character::class);
+        return $this->hasMany(CharacterSkill::class);
     }
 }
