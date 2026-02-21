@@ -2,8 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Enums\CharacterClass;
-use App\Enums\Race;
+use App\Enums\Character\Occupation;
 use App\Models\Character;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -20,15 +19,14 @@ class CharacterFactory extends Factory
      */
     public function definition(): array
     {
-        $level = fake()->numberBetween(1, 20);
-
         return [
             'user_id' => User::factory(),
             'name' => fake()->name(),
-            'race' => fake()->randomElement(Race::cases()),
-            'character_class' => fake()->randomElement(CharacterClass::cases()),
-            'level' => $level,
-            'experience_points' => $level * fake()->numberBetween(100, 1000),
+            'occupation' => fake()->randomElement(Occupation::cases()),
+            'age' => fake()->numberBetween(15, 70),
+            'gender' => fake()->optional()->randomElement(['Male', 'Female', 'Non-binary']),
+            'birthplace' => fake()->city() . ', ' . fake()->country(),
+            'residence' => fake()->city() . ', ' . fake()->country(),
         ];
     }
 }

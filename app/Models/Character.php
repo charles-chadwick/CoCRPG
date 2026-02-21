@@ -2,8 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\CharacterClass;
-use App\Enums\Race;
+use App\Enums\Character\Occupation;
 use Database\Factories\CharacterFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,19 +17,19 @@ class Character extends Base
     protected $fillable = [
         'user_id',
         'name',
-        'race',
-        'character_class',
-        'level',
-        'experience_points',
+        'occupation',
+        'age',
+        'gender',
+        'birthplace',
+        'residence',
+        'description',
     ];
 
     protected function casts(): array
     {
         return [
-            'race' => Race::class,
-            'character_class' => CharacterClass::class,
-            'level' => 'integer',
-            'experience_points' => 'integer',
+            'occupation' => Occupation::class,
+            'age' => 'integer',
         ];
     }
 
@@ -46,7 +45,7 @@ class Character extends Base
 
     public function possessions(): BelongsToMany
     {
-        return $this->belongsToMany(Possession::class)
+        return $this->belongsToMany(Possession::class, 'character_possessions')
             ->using(CharacterPossession::class)
             ->withPivot('modifier_sign', 'modifier')
             ->withTimestamps();

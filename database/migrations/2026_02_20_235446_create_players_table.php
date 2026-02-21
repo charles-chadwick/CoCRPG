@@ -15,10 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->string('race');
-            $table->string('character_class');
-            $table->unsignedSmallInteger('level')->default(1);
-            $table->unsignedInteger('experience_points')->default(0);
+            $table->string('occupation');
+            $table->unsignedSmallInteger('age');
+            $table->string('gender')->nullable();
+            $table->string('birthplace')->nullable();
+            $table->string('residence')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

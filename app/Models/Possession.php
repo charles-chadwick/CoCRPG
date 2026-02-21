@@ -28,7 +28,7 @@ class Possession extends Base
 
     public function characters(): BelongsToMany
     {
-        return $this->belongsToMany(Character::class)
+        return $this->belongsToMany(Character::class, 'character_possessions')
             ->using(CharacterPossession::class)
             ->withPivot('modifier_sign', 'modifier')
             ->withTimestamps();
