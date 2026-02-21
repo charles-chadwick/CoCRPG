@@ -22,7 +22,8 @@ class PossessionFactory extends Factory
     {
         return [
             'player_id' => Player::factory(),
-            'name' => fake()->randomElement(PlayerPossession::cases()),
+            'type' => fake()->randomElement(PlayerPossession::cases()),
+            'name' => fake()->word(),
             'value' => fake()->numberBetween(1, 100),
             'modifier_sign' => fake()->optional()->randomElement(ModifierSign::cases()),
             'modifier' => fake()->optional()->numberBetween(1, 5),

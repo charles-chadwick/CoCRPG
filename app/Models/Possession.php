@@ -15,6 +15,7 @@ class Possession extends Base
 
     protected $fillable = [
         'player_id',
+        'type',
         'name',
         'value',
         'modifier_sign',
@@ -24,7 +25,7 @@ class Possession extends Base
     protected function casts(): array
     {
         return [
-            'name' => PlayerPossession::class,
+            'type' => PlayerPossession::class,
             'value' => 'integer',
             'modifier_sign' => ModifierSign::class,
             'modifier' => 'integer',

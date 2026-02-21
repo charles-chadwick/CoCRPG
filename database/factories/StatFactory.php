@@ -22,7 +22,7 @@ class StatFactory extends Factory
         return [
             'player_id' => Player::factory(),
             'name' => fake()->randomElement(StatEnum::cases()),
-            'value' => fake()->numberBetween(1, 20),
+            'value' => fake()->numberBetween(15, 90),
         ];
     }
 }

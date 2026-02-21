@@ -30,4 +30,14 @@ class Stat extends Base
     {
         return $this->belongsTo(Player::class);
     }
+
+    public function halfValue(): int
+    {
+        return intdiv($this->value, 2);
+    }
+
+    public function fifthValue(): int
+    {
+        return intdiv($this->value, 5);
+    }
 }

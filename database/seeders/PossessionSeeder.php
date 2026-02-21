@@ -18,7 +18,7 @@ class PossessionSeeder extends Seeder
             foreach (PlayerPossession::cases() as $possession) {
                 Possession::factory()->create([
                     'player_id' => $player->id,
-                    'name' => $possession,
+                    'type' => $possession,
                 ]);
             }
         });

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('possessions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('player_id')->constrained()->cascadeOnDelete();
+            $table->string('type');
             $table->string('name');
             $table->unsignedInteger('value')->default(0);
             $table->string('modifier_sign')->nullable();

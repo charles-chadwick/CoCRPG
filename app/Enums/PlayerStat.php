@@ -5,9 +5,12 @@ namespace App\Enums;
 enum PlayerStat: string
 {
     case Strength = 'Strength';
-    case Dexterity = 'Dexterity';
     case Constitution = 'Constitution';
+    case Size = 'Size';
+    case Dexterity = 'Dexterity';
+    case Appearance = 'Appearance';
     case Intelligence = 'Intelligence';
-    case Wisdom = 'Wisdom';
-    case Charisma = 'Charisma';
+    case Power = 'Power';
+    case Education = 'Education';
+    case Luck = 'Luck';
 }
