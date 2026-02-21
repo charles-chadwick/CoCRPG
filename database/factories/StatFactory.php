@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Enums\PlayerStat as StatEnum;
-use App\Models\Player;
+use App\Enums\CharacterStat as StatEnum;
+use App\Models\Character;
 use App\Models\Stat;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,7 +20,7 @@ class StatFactory extends Factory
     public function definition(): array
     {
         return [
-            'player_id' => Player::factory(),
+            'character_id' => Character::factory(),
             'name' => fake()->randomElement(StatEnum::cases()),
             'value' => fake()->numberBetween(15, 90),
         ];

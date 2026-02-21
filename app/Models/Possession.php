@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\PlayerPossession;
+use App\Enums\CharacterPossession;
 use Database\Factories\PossessionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -21,15 +21,15 @@ class Possession extends Base
     protected function casts(): array
     {
         return [
-            'type' => PlayerPossession::class,
+            'type' => CharacterPossession::class,
             'value' => 'integer',
         ];
     }
 
-    public function players(): BelongsToMany
+    public function characters(): BelongsToMany
     {
-        return $this->belongsToMany(Player::class)
-            ->using(PlayerPossession::class)
+        return $this->belongsToMany(Character::class)
+            ->using(CharacterPossession::class)
             ->withPivot('modifier_sign', 'modifier')
             ->withTimestamps();
     }

@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum PlayerStat: string
+enum CharacterStat: string
 {
     case Strength = 'Strength';
     case Constitution = 'Constitution';

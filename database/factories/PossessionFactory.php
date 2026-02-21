@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Enums\PlayerPossession;
+use App\Enums\CharacterPossession;
 use App\Models\Possession;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,7 +19,7 @@ class PossessionFactory extends Factory
     public function definition(): array
     {
         return [
-            'type' => fake()->randomElement(PlayerPossession::cases()),
+            'type' => fake()->randomElement(CharacterPossession::cases()),
             'name' => fake()->word(),
             'value' => fake()->numberBetween(1, 100),
         ];

@@ -4,15 +4,15 @@ namespace App\Models;
 
 use App\Enums\CharacterClass;
 use App\Enums\Race;
-use Database\Factories\PlayerFactory;
+use Database\Factories\CharacterFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Player extends Base
+class Character extends Base
 {
-    /** @use HasFactory<PlayerFactory> */
+    /** @use HasFactory<CharacterFactory> */
     use HasFactory;
 
     protected $fillable = [
@@ -47,7 +47,7 @@ class Player extends Base
     public function possessions(): BelongsToMany
     {
         return $this->belongsToMany(Possession::class)
-            ->using(PlayerPossession::class)
+            ->using(CharacterPossession::class)
             ->withPivot('modifier_sign', 'modifier')
             ->withTimestamps();
     }

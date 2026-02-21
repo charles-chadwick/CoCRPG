@@ -4,14 +4,14 @@ namespace Database\Factories;
 
 use App\Enums\CharacterClass;
 use App\Enums\Race;
-use App\Models\Player;
+use App\Models\Character;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Player>
+ * @extends Factory<Character>
  */
-class PlayerFactory extends Factory
+class CharacterFactory extends Factory
 {
     /**
      * Define the model's default state.

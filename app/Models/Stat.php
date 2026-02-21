@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\PlayerStat as StatEnum;
+use App\Enums\CharacterStat as StatEnum;
 use Database\Factories\StatFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,7 +13,7 @@ class Stat extends Base
     use HasFactory;
 
     protected $fillable = [
-        'player_id',
+        'character_id',
         'name',
         'value',
     ];
@@ -26,9 +26,9 @@ class Stat extends Base
         ];
     }
 
-    public function player(): BelongsTo
+    public function character(): BelongsTo
     {
-        return $this->belongsTo(Player::class);
+        return $this->belongsTo(Character::class);
     }
 
     public function halfValue(): int

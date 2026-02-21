@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Enums\PlayerStat;
-use App\Models\Player;
+use App\Enums\CharacterStat;
+use App\Models\Character;
 use App\Models\Stat;
 use Illuminate\Database\Seeder;
 
@@ -14,10 +14,10 @@ class StatSeeder extends Seeder
      */
     public function run(): void
     {
-        Player::query()->each(function (Player $player): void {
-            foreach (PlayerStat::cases() as $stat) {
+        Character::query()->each(function (Character $character): void {
+            foreach (CharacterStat::cases() as $stat) {
                 Stat::factory()->create([
-                    'player_id' => $player->id,
+                    'character_id' => $character->id,
                     'name' => $stat,
                 ]);
             }

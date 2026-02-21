@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Enums\ModifierSign;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class PlayerPossession extends Pivot
+class CharacterPossession extends Pivot
 {
     protected function casts(): array
     {

@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('player_possession', function (Blueprint $table) {
+        Schema::create('character_possession', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('player_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('character_id')->constrained()->cascadeOnDelete();
             $table->foreignId('possession_id')->constrained()->cascadeOnDelete();
             $table->string('modifier_sign')->nullable();
             $table->integer('modifier')->nullable();
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('player_possession');
+        Schema::dropIfExists('character_possession');
     }
 };

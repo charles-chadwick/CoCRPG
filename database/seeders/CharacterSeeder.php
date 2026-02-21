@@ -2,16 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\Player;
+use App\Models\Character;
 use Illuminate\Database\Seeder;
 
-class PlayerSeeder extends Seeder
+class CharacterSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Player::factory()->count(10)->create();
+        Character::factory()->count(10)->create();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum PlayerPossession: string
+enum CharacterPossession: string
 {
     case Weapon        = 'Weapon';
     case Essential     = 'Essential';
