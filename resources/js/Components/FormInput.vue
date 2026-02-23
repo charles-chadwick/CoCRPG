@@ -30,7 +30,7 @@ defineEmits(['update:model_value']);
             :disabled="disabled"
             :required="required"
             :class="[
-                'w-full rounded-lg border px-3 py-2 text-sm text-darker-900 shadow-xs transition',
+                'w-full rounded-lg border px-3 py-2 bg-white text-darker-900 shadow-xs transition',
                 'placeholder:text-darker-400',
                 'focus:outline-none focus:ring-2 focus:ring-offset-0',
                 'disabled:cursor-not-allowed disabled:bg-darker-100 disabled:text-darker-400',

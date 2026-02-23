@@ -9,3 +9,4 @@ Route::get('/', function () {
 });
 
 Route::get('/characters/{character}', [CharacterController::class, 'show'])->name('characters.show');
+Route::patch('/characters/{character}', [CharacterController::class, 'update'])->name('characters.update');
