@@ -284,7 +284,7 @@ const SaveCharacter = () => {
                                             : 'text-secondary-600'"
                                         class="font-semibold"
                                     >
-                                        {{ item.modifier_sign === 'Plus' ? '+' : '-' }}{{ item.modifier }}
+                                        {{ item.modifier_sign === 'Plus' ? '+' : '-' }}{{ Math.abs(item.modifier) }}
                                     </span>
                                 </div>
                             </div>

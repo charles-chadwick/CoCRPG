@@ -36,7 +36,7 @@ defineEmits(['update:model_value']);
                     : 'border-darker-300 focus:border-primary-500 focus:ring-primary-200',
             ]"
             :value="model_value"
-            @change="$emit('update:modelValue', $event.target.value)"
+            @change="$emit('update:model_value', $event.target.value)"
         >
             <option v-if="placeholder" value="" disabled>{{ placeholder }}</option>
             <option

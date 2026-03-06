@@ -38,7 +38,7 @@ defineEmits(['update:model_value']);
                     ? 'border-secondary-400 focus:border-secondary-500 focus:ring-secondary-200'
                     : 'border-darker-300 focus:border-primary-500 focus:ring-primary-200',
             ]"
-            @input="$emit('update:modelValue', $event.target.value)"
+            @input="$emit('update:model_value', $event.target.value)"
         />
         <p v-if="error" class="text-xs text-secondary-500">{{ error }}</p>
     </div>

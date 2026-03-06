@@ -62,6 +62,6 @@ class Character extends Base
     {
         return $this->possessions
             ->groupBy(fn ($possession) => $possession->type->value)
-            ->map(fn ($group) => PossessionResource::collection($group));
+            ->map(fn ($group) => PossessionResource::collection($group)->resolve());
     }
 }

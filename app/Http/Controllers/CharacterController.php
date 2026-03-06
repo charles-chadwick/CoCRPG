@@ -19,7 +19,7 @@ class CharacterController extends Controller
     {
         $character->load([
             'stats',
-            'characterSkills',
+            'characterSkills.skill',
             'possessions',
         ]);
 
@@ -33,8 +33,8 @@ class CharacterController extends Controller
                 'birthplace' => $character->birthplace,
                 'residence' => $character->residence,
                 'description' => $character->description,
-                'stats' => StatResource::collection($character->stats),
-                'skills' => CharacterSkillResource::collection($character->characterSkills),
+                'stats' => StatResource::collection($character->stats)->resolve(),
+                'skills' => CharacterSkillResource::collection($character->characterSkills)->resolve(),
                 'possessions' => $character->groupedPossessions(),
             ],
             'occupation_options' => collect(Occupation::cases())
