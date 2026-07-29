@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\GetUserCharactersAction;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class DashboardController extends Controller
 {
-    public function index(): Response
+    public function index(GetUserCharactersAction $action): Response
     {
         return Inertia::render('Dashboard', [
-            'characters' => auth()->user()->characters()->latest()->get(['id', 'name', 'occupation', 'age', 'gender', 'birthplace']),
+            'characters' => $action->handle(auth()->user()),
         ]);
     }
 }
