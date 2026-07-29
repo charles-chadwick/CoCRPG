@@ -16,7 +16,8 @@ class GetUserCharactersAction
     public function handle(User $user): Collection
     {
         return $user->characters()
+            ->with('campaign:id,title')
             ->latest()
-            ->get(['id', 'name', 'occupation', 'age', 'gender', 'birthplace']);
+            ->get(['id', 'campaign_id', 'name', 'occupation', 'age', 'gender', 'birthplace']);
     }
 }

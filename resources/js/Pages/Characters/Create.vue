@@ -24,6 +24,7 @@ const props = defineProps({
     all_possessions: { type: Object, required: true },
     stat_names: { type: Array, required: true },
     occupation_skills: { type: Object, required: true },
+    campaign_options: { type: Array, default: () => [] },
 })
 
 // ─── Step ────────────────────────────────────────────────────────────────────
@@ -33,6 +34,7 @@ const steps = ['Basics', 'Characteristics', 'Skills', 'Items']
 // ─── Form ────────────────────────────────────────────────────────────────────
 const form = useForm({
     name: '',
+    campaign_id: '',
     occupation: '',
     age: '',
     gender: '',
@@ -218,28 +220,28 @@ const submit = () => {
                         <div :class="[
                             'flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold transition',
                             step > i + 1
-                                ? 'bg-primary-500 text-darker-900'
+                                ? 'bg-primary-500 text-darker-950'
                                 : step === i + 1
-                                    ? 'bg-primary-500 text-darker-900 ring-4 ring-primary-200'
-                                    : 'bg-darker-200 text-darker-500',
+                                    ? 'bg-primary-500 text-darker-950 ring-4 ring-primary-500/30'
+                                    : 'bg-darker-800 text-darker-500',
                         ]">
                             <span v-if="step > i + 1">✓</span>
                             <span v-else>{{ i + 1 }}</span>
                         </div>
                         <span :class="[
                             'text-sm font-medium hidden sm:block',
-                            step === i + 1 ? 'text-primary-600' : 'text-darker-400',
+                            step === i + 1 ? 'text-primary-400' : 'text-darker-400',
                         ]">{{ label }}</span>
                     </div>
                     <div
                         v-if="i < steps.length - 1"
-                        :class="['mx-3 h-0.5 flex-1', step > i + 1 ? 'bg-primary-400' : 'bg-darker-200']"
+                        :class="['mx-3 h-0.5 flex-1', step > i + 1 ? 'bg-primary-400' : 'bg-darker-800']"
                     />
                 </template>
             </div>
 
             <!-- Step content -->
-            <div class="rounded-2xl bg-darker-800 px-6 py-8 text-white sm:px-8">
+            <div class="rounded-2xl border border-darker-700 bg-darker-900 px-6 py-8 text-darker-100 sm:px-8">
 
                 <!-- Step 1: Basics -->
                 <template v-if="step === 1">
@@ -252,7 +254,29 @@ const submit = () => {
                                 placeholder="Character name"
                                 class="mt-1"
                             />
-                            <p v-if="form.errors.name" class="mt-1 text-xs text-secondary-400">{{ form.errors.name }}</p>
+                            <p v-if="form.errors.name" class="mt-1 text-xs text-red-400">{{ form.errors.name }}</p>
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            <Label class="text-darker-300">Campaign</Label>
+                            <Select v-if="campaign_options.length" v-model="form.campaign_id">
+                                <SelectTrigger class="mt-1 w-full">
+                                    <SelectValue placeholder="No campaign" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem
+                                        v-for="opt in campaign_options"
+                                        :key="opt.value"
+                                        :value="String(opt.value)"
+                                    >
+                                        {{ opt.label }}
+                                    </SelectItem>
+                                </SelectContent>
+                            </Select>
+                            <p v-else class="mt-1 text-xs text-darker-500">
+                                You do not belong to any campaigns yet. A Keeper can add you to one.
+                            </p>
+                            <p v-if="form.errors.campaign_id" class="mt-1 text-xs text-red-400">{{ form.errors.campaign_id }}</p>
                         </div>
 
                         <div>
@@ -271,7 +295,7 @@ const submit = () => {
                                     </SelectItem>
                                 </SelectContent>
                             </Select>
-                            <p v-if="form.errors.occupation" class="mt-1 text-xs text-secondary-400">{{ form.errors.occupation }}</p>
+                            <p v-if="form.errors.occupation" class="mt-1 text-xs text-red-400">{{ form.errors.occupation }}</p>
                         </div>
 
                         <div>
@@ -284,7 +308,7 @@ const submit = () => {
                                 max="999"
                                 class="mt-1"
                             />
-                            <p v-if="form.errors.age" class="mt-1 text-xs text-secondary-400">{{ form.errors.age }}</p>
+                            <p v-if="form.errors.age" class="mt-1 text-xs text-red-400">{{ form.errors.age }}</p>
                         </div>
 
                         <div>
@@ -326,7 +350,7 @@ const submit = () => {
                         <div
                             v-for="(stat, i) in form.stats"
                             :key="stat.name"
-                            class="rounded-xl border border-darker-600 bg-darker-700 p-4"
+                            class="rounded-xl border border-darker-700 bg-darker-800 p-4"
                         >
                             <div class="mb-2 flex items-center justify-between">
                                 <span class="text-xs font-bold uppercase tracking-widest text-secondary-400">
@@ -353,7 +377,7 @@ const submit = () => {
                             </div>
                         </div>
                     </div>
-                    <p v-if="form.errors.stats" class="mt-3 text-xs text-secondary-400">{{ form.errors.stats }}</p>
+                    <p v-if="form.errors.stats" class="mt-3 text-xs text-red-400">{{ form.errors.stats }}</p>
                 </template>
 
                 <!-- Step 3: Skills -->
@@ -382,12 +406,12 @@ const submit = () => {
                             :class="[
                                 'flex items-center gap-3 rounded-lg border px-3 py-2',
                                 occupationSkillNames.includes(skill.name)
-                                    ? 'border-primary-500/30 bg-primary-900/20'
-                                    : 'border-darker-600 bg-darker-700/50',
+                                    ? 'border-primary-700 bg-primary-900/20'
+                                    : 'border-darker-700 bg-darker-800',
                             ]"
                         >
                             <div class="min-w-0 flex-1">
-                                <span class="text-sm font-medium text-white">{{ skill.name }}</span>
+                                <span class="text-sm font-medium text-darker-100">{{ skill.name }}</span>
                                 <span v-if="occupationSkillNames.includes(skill.name)" class="ml-2 text-xs text-primary-400">occ</span>
                             </div>
                             <span class="text-xs text-darker-500 w-8 text-right">{{ baseValues[skill.id] ?? skill.base }}</span>
@@ -427,14 +451,14 @@ const submit = () => {
                                 <div
                                     v-for="item in (all_possessions[type] ?? [])"
                                     :key="item.id"
-                                    class="flex flex-wrap items-center gap-3 rounded-lg border border-darker-600 bg-darker-700 px-4 py-3"
+                                    class="flex flex-wrap items-center gap-3 rounded-lg border border-darker-700 bg-darker-800 px-4 py-3"
                                 >
                                     <Checkbox
                                         :id="`poss-${item.id}`"
                                         :checked="isPossessionChecked(item.id)"
                                         @update:checked="() => togglePossession(item)"
                                     />
-                                    <label :for="`poss-${item.id}`" class="flex-1 cursor-pointer text-sm font-medium text-white">
+                                    <label :for="`poss-${item.id}`" class="flex-1 cursor-pointer text-sm font-medium text-darker-100">
                                         {{ item.name }}
                                     </label>
                                     <span class="text-sm text-darker-400">{{ item.value }}</span>
@@ -466,12 +490,12 @@ const submit = () => {
                                 <div
                                     v-for="(item, idx) in form.new_possessions.filter(p => p.type === type)"
                                     :key="`new-${idx}`"
-                                    class="flex items-center gap-3 rounded-lg border border-primary-600/40 bg-primary-900/10 px-4 py-3"
+                                    class="flex items-center gap-3 rounded-lg border border-primary-700 bg-primary-900/20 px-4 py-3"
                                 >
                                     <span class="text-sm font-medium text-primary-300">{{ item.name }}</span>
                                     <span class="text-xs text-darker-400">{{ item.value }}</span>
                                     <button
-                                        class="ml-auto text-xs text-darker-400 hover:text-secondary-400"
+                                        class="ml-auto text-xs text-darker-400 hover:text-red-400"
                                         type="button"
                                         @click="form.new_possessions.splice(form.new_possessions.indexOf(item), 1)"
                                     >

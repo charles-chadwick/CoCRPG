@@ -18,6 +18,7 @@ class Character extends Base
 
     protected $fillable = [
         'user_id',
+        'campaign_id',
         'name',
         'occupation',
         'age',
@@ -38,6 +39,11 @@ class Character extends Base
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function campaign(): BelongsTo
+    {
+        return $this->belongsTo(Campaign::class);
     }
 
     public function stats(): HasMany

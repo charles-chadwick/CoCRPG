@@ -23,7 +23,7 @@ class CharacterController extends Controller
 {
     public function create(GetCharacterFormOptionsAction $formOptions): Response
     {
-        return Inertia::render('Characters/Create', $formOptions->handle());
+        return Inertia::render('Characters/Create', $formOptions->handle(auth()->user()));
     }
 
     public function store(StoreCharacterRequest $request, CreateCharacterAction $action): RedirectResponse
@@ -36,7 +36,7 @@ class CharacterController extends Controller
     public function show(Character $character, GetCharacterDetailsAction $details, GetCharacterFormOptionsAction $formOptions): Response
     {
         return Inertia::render('Characters/Show', [
-            ...$formOptions->handle(),
+            ...$formOptions->handle(auth()->user()),
             'character' => $details->handle($character),
         ]);
     }

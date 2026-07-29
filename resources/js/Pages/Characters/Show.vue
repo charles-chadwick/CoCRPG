@@ -17,7 +17,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select'
-import { useForm } from '@inertiajs/vue3'
+import { Link, useForm } from '@inertiajs/vue3'
 import { ref, computed, watch } from 'vue'
 
 const props = defineProps({
@@ -38,6 +38,10 @@ const props = defineProps({
          */
         type: Object,
         required: true,
+    },
+    campaign_options: {
+        type: Array,
+        default: () => [],
     },
     occupation_options: {
         type: Array,
@@ -76,8 +80,14 @@ const EarnedLeft = (base) => `${Math.min(base, 100)}%`
 // ─── Basic info form ──────────────────────────────────────────────────────────
 const is_editing = ref(false)
 
+const campaign_select_options = computed(() => [
+    { value: '', label: 'No campaign' },
+    ...props.campaign_options,
+])
+
 const form = useForm({
     name: props.character.name,
+    campaign_id: props.character.campaign_id ?? '',
     occupation: props.character.occupation,
     age: props.character.age,
     gender: props.character.gender,
@@ -262,7 +272,7 @@ const SavePossessions = () => {
         <div class="space-y-8 py-8">
 
             <!-- Header -->
-            <div class="rounded-2xl bg-darker-800 px-8 py-6 text-white">
+            <div class="rounded-2xl border border-darker-700 bg-darker-900 px-8 py-6 text-darker-100">
                 <!-- View mode -->
                 <template v-if="!is_editing">
                     <div class="flex flex-wrap items-start justify-between gap-4">
@@ -271,9 +281,16 @@ const SavePossessions = () => {
                                 {{ character.name }}
                             </h1>
                             <p class="mt-1 text-lg text-secondary-300">{{ character.occupation }}</p>
+                            <Link
+                                v-if="character.campaign"
+                                :href="route('campaigns.show', character.campaign.id)"
+                                class="mt-2 inline-block text-xs font-medium uppercase tracking-widest text-darker-400 transition hover:text-primary-300"
+                            >
+                                {{ character.campaign.title }}
+                            </Link>
                         </div>
                         <div class="flex items-start gap-6">
-                            <div class="gap-x-6 gap-y-2 text-sm text-white">
+                            <div class="gap-x-6 gap-y-2 text-sm text-darker-200">
                                 <p><span class="font-bold text-darker-500">Age:</span> {{ character.age }}</p>
                                 <p><span class="font-bold text-darker-500">Gender:</span> {{ character.gender }}</p>
                                 <p><span class="font-bold text-darker-500">Birthplace:</span> {{ character.birthplace }}</p>
@@ -294,7 +311,7 @@ const SavePossessions = () => {
 
                 <!-- Edit mode -->
                 <template v-else>
-                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 text-white">
+                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 text-darker-100">
                         <div class="sm:col-span-2">
                             <FormInput
                                 name="name"
@@ -302,6 +319,15 @@ const SavePossessions = () => {
                                 :model_value="form.name"
                                 :error="form.errors.name"
                                 @update:model_value="form.name = $event"
+                            />
+                        </div>
+                        <div class="sm:col-span-2">
+                            <FormSelect
+                                name="campaign_id"
+                                :options="campaign_select_options"
+                                :model_value="form.campaign_id"
+                                :error="form.errors.campaign_id"
+                                @update:model_value="form.campaign_id = $event"
                             />
                         </div>
                         <FormSelect
@@ -353,14 +379,14 @@ const SavePossessions = () => {
                     </div>
                     <div class="mt-4 flex justify-end gap-2">
                         <button
-                            class="rounded-lg border border-darker-600 px-4 py-2 text-sm font-semibold text-darker-300 transition hover:border-darker-400 hover:text-white"
+                            class="rounded-lg border border-darker-600 px-4 py-2 text-sm font-semibold text-darker-300 transition hover:border-darker-500 hover:text-darker-100"
                             :disabled="form.processing"
                             @click="CancelEditing"
                         >
                             Cancel
                         </button>
                         <button
-                            class="rounded-lg bg-primary-500 px-4 py-2 text-sm font-semibold text-darker-900 transition hover:bg-primary-400 disabled:opacity-50"
+                            class="rounded-lg bg-primary-500 px-4 py-2 text-sm font-semibold text-darker-950 transition hover:bg-primary-400 disabled:opacity-50"
                             :disabled="form.processing"
                             @click="SaveCharacter"
                         >
@@ -385,14 +411,14 @@ const SavePossessions = () => {
                     </button>
                     <div v-else class="flex gap-2">
                         <button
-                            class="rounded-lg border border-darker-600 px-3 py-1.5 text-xs font-semibold text-darker-300 transition hover:border-darker-400 hover:text-white"
+                            class="rounded-lg border border-darker-600 px-3 py-1.5 text-xs font-semibold text-darker-300 transition hover:border-darker-500 hover:text-darker-100"
                             :disabled="stats_form.processing"
                             @click="CancelEditingStats"
                         >
                             Cancel
                         </button>
                         <button
-                            class="rounded-lg bg-primary-500 px-3 py-1.5 text-xs font-semibold text-darker-900 transition hover:bg-primary-400 disabled:opacity-50"
+                            class="rounded-lg bg-primary-500 px-3 py-1.5 text-xs font-semibold text-darker-950 transition hover:bg-primary-400 disabled:opacity-50"
                             :disabled="stats_form.processing"
                             @click="SaveStats"
                         >
@@ -406,13 +432,13 @@ const SavePossessions = () => {
                     <div
                         v-for="stat in character.stats"
                         :key="stat.name"
-                        class="flex flex-col items-center rounded-xl border border-darker-200 bg-white px-2 py-4 shadow-xs"
+                        class="flex flex-col items-center rounded-xl border border-darker-700 bg-darker-900 px-2 py-4 shadow-xs"
                     >
-                        <span class="text-xs font-bold uppercase tracking-widest text-secondary-600">
+                        <span class="text-xs font-bold uppercase tracking-widest text-secondary-400">
                             {{ StatAbbr(stat.name) }}
                         </span>
-                        <span class="mt-2 text-3xl font-bold text-darker-900">{{ stat.value }}</span>
-                        <div class="mt-3 w-full border-t border-darker-100 pt-2">
+                        <span class="mt-2 text-3xl font-bold text-darker-100">{{ stat.value }}</span>
+                        <div class="mt-3 w-full border-t border-darker-800 pt-2">
                             <div class="flex justify-between text-xs text-darker-400">
                                 <span>½ {{ stat.half }}</span>
                                 <span>⅕ {{ stat.fifth }}</span>
@@ -426,9 +452,9 @@ const SavePossessions = () => {
                     <div
                         v-for="(stat, i) in stats_form.stats"
                         :key="stat.name"
-                        class="flex flex-col items-center rounded-xl border border-primary-300 bg-white px-2 py-4 shadow-xs"
+                        class="flex flex-col items-center rounded-xl border border-primary-700 bg-darker-900 px-2 py-4 shadow-xs"
                     >
-                        <span class="text-xs font-bold uppercase tracking-widest text-secondary-600">
+                        <span class="text-xs font-bold uppercase tracking-widest text-secondary-400">
                             {{ StatAbbr(stat.name) }}
                         </span>
                         <input
@@ -436,9 +462,9 @@ const SavePossessions = () => {
                             type="number"
                             min="1"
                             max="100"
-                            class="mt-2 w-full text-center text-xl font-bold text-darker-900 outline-none border-b border-primary-300 bg-transparent"
+                            class="mt-2 w-full text-center text-xl font-bold text-darker-100 outline-none border-b border-primary-500 bg-transparent"
                         />
-                        <div class="mt-3 w-full border-t border-darker-100 pt-2">
+                        <div class="mt-3 w-full border-t border-darker-800 pt-2">
                             <div class="flex justify-between text-xs text-darker-400">
                                 <span>½ {{ Math.floor(stat.value / 2) }}</span>
                                 <span>⅕ {{ Math.floor(stat.value / 5) }}</span>
@@ -471,14 +497,14 @@ const SavePossessions = () => {
                                 Int: {{ interestRemaining }} / {{ interestPool }}
                             </Badge>
                             <button
-                                class="rounded-lg border border-darker-600 px-3 py-1.5 text-xs font-semibold text-darker-300 transition hover:border-darker-400 hover:text-white"
+                                class="rounded-lg border border-darker-600 px-3 py-1.5 text-xs font-semibold text-darker-300 transition hover:border-darker-500 hover:text-darker-100"
                                 :disabled="skills_form.processing"
                                 @click="CancelEditingSkills"
                             >
                                 Cancel
                             </button>
                             <button
-                                class="rounded-lg bg-primary-500 px-3 py-1.5 text-xs font-semibold text-darker-900 transition hover:bg-primary-400 disabled:opacity-50"
+                                class="rounded-lg bg-primary-500 px-3 py-1.5 text-xs font-semibold text-darker-950 transition hover:bg-primary-400 disabled:opacity-50"
                                 :disabled="skills_form.processing"
                                 @click="SaveSkills"
                             >
@@ -493,20 +519,20 @@ const SavePossessions = () => {
                     <div
                         v-for="skill in character.skills"
                         :key="skill.name"
-                        class="flex items-center gap-3 rounded-lg border border-darker-200 bg-white px-4 py-3 shadow-xs"
+                        class="flex items-center gap-3 rounded-lg border border-darker-700 bg-darker-900 px-4 py-3 shadow-xs"
                     >
                         <div class="min-w-0 flex-1">
                             <div class="flex items-center justify-between gap-2">
-                                <span class="truncate text-sm font-medium text-darker-800">
+                                <span class="truncate text-sm font-medium text-darker-200">
                                     {{ skill.name }}
                                 </span>
-                                <span class="shrink-0 text-sm font-bold text-primary-600">
+                                <span class="shrink-0 text-sm font-bold text-primary-400">
                                     {{ skill.value }}
                                 </span>
                             </div>
-                            <div class="relative mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-darker-100">
+                            <div class="relative mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-darker-800">
                                 <div
-                                    class="absolute left-0 top-0 h-full bg-primary-200"
+                                    class="absolute left-0 top-0 h-full bg-primary-800"
                                     :style="{ width: BaseWidth(skill.base) }"
                                 />
                                 <div
@@ -526,13 +552,13 @@ const SavePossessions = () => {
                         :class="[
                             'flex items-center gap-3 rounded-lg border px-3 py-2',
                             occupationSkillNames.includes(skill.name)
-                                ? 'border-primary-300 bg-primary-50'
-                                : 'border-darker-200 bg-white',
+                                ? 'border-primary-700 bg-primary-900/20'
+                                : 'border-darker-700 bg-darker-900',
                         ]"
                     >
                         <div class="min-w-0 flex-1">
-                            <span class="text-sm font-medium text-darker-800">{{ skill.name }}</span>
-                            <span v-if="occupationSkillNames.includes(skill.name)" class="ml-2 text-xs text-primary-500">occ</span>
+                            <span class="text-sm font-medium text-darker-200">{{ skill.name }}</span>
+                            <span v-if="occupationSkillNames.includes(skill.name)" class="ml-2 text-xs text-primary-400">occ</span>
                         </div>
                         <span class="text-xs text-darker-400 w-8 text-right">{{ baseSkillValues[skill.id] ?? skill.base }}</span>
                         <input
@@ -542,7 +568,7 @@ const SavePossessions = () => {
                             min="0"
                             max="99"
                             :disabled="isSkillLocked(skill.name)"
-                            class="w-16 rounded border border-darker-300 px-2 py-1 text-center text-sm font-medium text-darker-900 disabled:cursor-not-allowed disabled:opacity-50"
+                            class="w-16 rounded border border-darker-700 bg-darker-800 px-2 py-1 text-center text-sm font-medium text-darker-100 disabled:cursor-not-allowed disabled:opacity-50"
                         />
                     </div>
                 </div>
@@ -565,14 +591,14 @@ const SavePossessions = () => {
                     <template v-else>
                         <div class="flex gap-2">
                             <button
-                                class="rounded-lg border border-darker-600 px-3 py-1.5 text-xs font-semibold text-darker-300 transition hover:border-darker-400 hover:text-white"
+                                class="rounded-lg border border-darker-600 px-3 py-1.5 text-xs font-semibold text-darker-300 transition hover:border-darker-500 hover:text-darker-100"
                                 :disabled="possessions_form.processing"
                                 @click="CancelEditingPossessions"
                             >
                                 Cancel
                             </button>
                             <button
-                                class="rounded-lg bg-primary-500 px-3 py-1.5 text-xs font-semibold text-darker-900 transition hover:bg-primary-400 disabled:opacity-50"
+                                class="rounded-lg bg-primary-500 px-3 py-1.5 text-xs font-semibold text-darker-950 transition hover:bg-primary-400 disabled:opacity-50"
                                 :disabled="possessions_form.processing"
                                 @click="SavePossessions"
                             >
@@ -586,23 +612,23 @@ const SavePossessions = () => {
                 <div v-if="!is_editing_possessions">
                     <div v-if="Object.keys(character.possessions).length" class="space-y-6">
                         <div v-for="type in SortedPossessionTypes" :key="type">
-                            <h3 class="mb-2 text-xs font-semibold uppercase tracking-wide text-secondary-500">
+                            <h3 class="mb-2 text-xs font-semibold uppercase tracking-wide text-secondary-400">
                                 {{ type }}
                             </h3>
                             <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
                                 <div
                                     v-for="item in character.possessions[type]"
                                     :key="item.name"
-                                    class="flex items-center justify-between rounded-lg border border-darker-200 bg-white px-4 py-3 shadow-xs"
+                                    class="flex items-center justify-between rounded-lg border border-darker-700 bg-darker-900 px-4 py-3 shadow-xs"
                                 >
-                                    <span class="text-sm font-medium text-darker-800">{{ item.name }}</span>
+                                    <span class="text-sm font-medium text-darker-200">{{ item.name }}</span>
                                     <div class="flex items-center gap-1 text-sm">
                                         <span class="text-darker-400">{{ item.value }}</span>
                                         <span
                                             v-if="item.modifier"
                                             :class="item.modifier_sign === 'Plus'
-                                                ? 'text-primary-600'
-                                                : 'text-secondary-600'"
+                                                ? 'text-primary-400'
+                                                : 'text-secondary-400'"
                                             class="font-semibold"
                                         >
                                             {{ item.modifier_sign === 'Plus' ? '+' : '-' }}{{ Math.abs(item.modifier) }}
@@ -637,14 +663,14 @@ const SavePossessions = () => {
                                 <div
                                     v-for="item in (all_possessions[type] ?? [])"
                                     :key="item.id"
-                                    class="flex flex-wrap items-center gap-3 rounded-lg border border-darker-200 bg-white px-4 py-3 shadow-xs"
+                                    class="flex flex-wrap items-center gap-3 rounded-lg border border-darker-700 bg-darker-900 px-4 py-3 shadow-xs"
                                 >
                                     <Checkbox
                                         :id="`edit-poss-${item.id}`"
                                         :checked="isPossessionChecked(item.id)"
                                         @update:checked="() => togglePossession(item)"
                                     />
-                                    <label :for="`edit-poss-${item.id}`" class="flex-1 cursor-pointer text-sm font-medium text-darker-800">
+                                    <label :for="`edit-poss-${item.id}`" class="flex-1 cursor-pointer text-sm font-medium text-darker-200">
                                         {{ item.name }}
                                     </label>
                                     <span class="text-sm text-darker-400">{{ item.value }}</span>
@@ -667,7 +693,7 @@ const SavePossessions = () => {
                                             @input="e => getPossessionPivot(item.id).modifier = e.target.value ? Number(e.target.value) : null"
                                             type="number"
                                             placeholder="Mod"
-                                            class="w-20 rounded border border-darker-300 px-2 py-1 text-center text-sm text-darker-900"
+                                            class="w-20 rounded border border-darker-700 bg-darker-800 px-2 py-1 text-center text-sm text-darker-100"
                                         />
                                     </template>
                                 </div>
@@ -676,12 +702,12 @@ const SavePossessions = () => {
                                 <div
                                     v-for="(item, idx) in possessions_form.new_possessions.filter(p => p.type === type)"
                                     :key="`new-${idx}`"
-                                    class="flex items-center gap-3 rounded-lg border border-primary-300 bg-primary-50 px-4 py-3"
+                                    class="flex items-center gap-3 rounded-lg border border-primary-700 bg-primary-900/20 px-4 py-3"
                                 >
-                                    <span class="text-sm font-medium text-primary-700">{{ item.name }}</span>
+                                    <span class="text-sm font-medium text-primary-300">{{ item.name }}</span>
                                     <span class="text-xs text-darker-400">{{ item.value }}</span>
                                     <button
-                                        class="ml-auto text-xs text-darker-400 hover:text-secondary-500"
+                                        class="ml-auto text-xs text-darker-400 hover:text-red-400"
                                         type="button"
                                         @click="possessions_form.new_possessions.splice(possessions_form.new_possessions.indexOf(item), 1)"
                                     >
