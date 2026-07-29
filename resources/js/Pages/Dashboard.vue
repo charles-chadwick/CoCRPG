@@ -71,6 +71,11 @@ defineProps({
                             {{ character.name }}
                         </h3>
 
+                        <!-- Campaign -->
+                        <p class="mb-2 text-xs text-darker-400">
+                            {{ character.campaign ? character.campaign.title : 'No campaign' }}
+                        </p>
+
                         <!-- Meta -->
                         <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-darker-500">
                             <span v-if="character.age">Age {{ character.age }}</span>

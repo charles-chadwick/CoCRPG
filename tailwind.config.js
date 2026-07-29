@@ -84,8 +84,8 @@ export default {
                 destructive: {
                     DEFAULT: '#ef4444',
                 },
-                border: 'oklch(0.444 0.011 73.64)',
-                input: 'oklch(0.444 0.011 73.64 / <alpha-value>)',
+                border: 'oklch(0.375 0.010 67.56)',
+                input: 'oklch(0.375 0.010 67.56 / <alpha-value>)',
                 ring: 'oklch(0.627 0.195 303.90 / <alpha-value>)',
             },
         },

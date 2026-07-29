@@ -13,6 +13,8 @@ class GetCharacterDetailsAction
      *
      * @return array{
      *     id: int,
+     *     campaign_id: ?int,
+     *     campaign: ?array{id: int, title: string},
      *     name: string,
      *     occupation: string,
      *     age: int,
@@ -28,6 +30,7 @@ class GetCharacterDetailsAction
     public function handle(Character $character): array
     {
         $character->load([
+            'campaign:id,title',
             'stats',
             'characterSkills.skill',
             'possessions',
@@ -35,6 +38,11 @@ class GetCharacterDetailsAction
 
         return [
             'id' => $character->id,
+            'campaign_id' => $character->campaign_id,
+            'campaign' => $character->campaign ? [
+                'id' => $character->campaign->id,
+                'title' => $character->campaign->title,
+            ] : null,
             'name' => $character->name,
             'occupation' => $character->occupation->value,
             'age' => $character->age,

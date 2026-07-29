@@ -33,6 +33,12 @@ const showingNavigationDropdown = ref(false);
                                 Dashboard
                             </NavLink>
                             <NavLink
+                                :href="route('campaigns.index')"
+                                :active="route().current('campaigns.*')"
+                            >
+                                Campaigns
+                            </NavLink>
+                            <NavLink
                                 :href="route('characters.create')"
                                 :active="route().current('characters.create')"
                             >
@@ -92,6 +98,9 @@ const showingNavigationDropdown = ref(false);
                 <div class="space-y-1 pb-3 pt-2">
                     <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                         Dashboard
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink :href="route('campaigns.index')" :active="route().current('campaigns.*')">
+                        Campaigns
                     </ResponsiveNavLink>
                     <ResponsiveNavLink :href="route('characters.create')" :active="route().current('characters.create')">
                         New Character

@@ -16,6 +16,7 @@ class CreateCharacterAction
         return DB::transaction(function () use ($user, $data): Character {
             $character = Character::create([
                 'user_id' => $user->id,
+                'campaign_id' => $data['campaign_id'] ?? null,
                 'name' => $data['name'],
                 'occupation' => $data['occupation'],
                 'age' => $data['age'],
